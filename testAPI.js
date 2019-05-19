@@ -9,20 +9,56 @@ const http = require('http');
 
 const APIkey = "AIzaSyC5jj2sM_3VyipWCB6iTnPv1EtuXsVckVw";  // ADD API KEY HERE
 const url = "https://translation.googleapis.com/language/translate/v2?key="+APIkey
-
+const sqlite3 = require("sqlite3").verbose();  // use sqlite
+const fs = require("fs"); // file system
+const dbFileName = "Flashcards.db";
+// makes the object that represents the database in our code
+const db = new sqlite3.Database(dbFileName);  // object, not database.
+process.on('SIGINT', function() {
+	db.all ( 'SELECT * FROM flashcards', dataCallback);
+    function dataCallback( err, data ) {
+    	console.log("My datbase");
+    	console.log(data);
+    	db.close(); 
+		console.log("database closed");
+		process.exit(0);
+    }
+});
+// Initialize table.
+// If the table already exists, causes an error.
+// Fix the error by removing or renaming Flashcards.db
+const cmdStr = `CREATE TABLE flashcards (
+					userID INTEGER PRIMARY KEY AUTOINCREMENT, 
+					sourceText TEXT,
+					translateText TEXT,
+					numShown INT,
+					numCorrect INT
+					)`
+db.run(cmdStr,tableCreationCallback);
 // An object containing the data expressing the query to the
 // translate API. 
 // Below, gets stringified and put into the body of an HTTP PUT request.
 let requestObject = 
 {
 	"source": "en",
-	"target": "ko",
+	"target": "es",
 	"q": [
 		"example phrase"
 	]
 }
 
 
+// Always use the callback for database operations and print out any
+// error messages you get.
+// This database stuff is hard to debug, give yourself a fighting chance.
+function tableCreationCallback(err) {
+    if (err) {
+	console.log("Table creation error",err);
+    } else {
+	console.log("Database created");
+	db.close();
+    }
+}
 // server and browser
 function queryHandler(req, res, next) {
     let qObj = req.query;
@@ -34,26 +70,35 @@ function queryHandler(req, res, next) {
 			// API is not working
 			console.log("Got API error");
 			console.log(APIresBody);
-
 		} else {
 			if (APIresHead.error) {
 			// API worked but is not giving you data
 			console.log(APIresHead.error);
 			} else {
-				// console.log("In Korean: ", 
-				// 	APIresBody.data.translations[0].translatedText);
-				// console.log("\n\nJSON was:");
-				// console.log(JSON.stringify(APIresBody, undefined, 2));
+
 				// print it out as a string, nicely formatted
+				const english = qObj.english;
+				const translate = APIresBody.data.translations[0].translatedText;
 				res.json({
-					"English":qObj.english,
-					"Korean": APIresBody.data.translations[0].translatedText
-				});
+					"English":english,
+					"Spanish": translate
+				});	
+
+				const inStr = `INSERT INTO flashcards (
+					sourceText,
+					translateText,
+					numShown,
+					numCorrect
+					) VALUES
+					(@0, @1, 0, 0)`;
+				//console.log(inStr);
+				db.run(inStr, english, translate, tableInsertionCallback);
+				//res.json( {"translation":translate});
+				//res.statusCode = 200;
 			}
 		}
 	} // end callback function
   	if(qObj.english != undefined){
-
         requestObject.q[0] = qObj.english;
         // console.log(requestObject);
         APIrequest(
@@ -72,6 +117,21 @@ function queryHandler(req, res, next) {
    
 }
 
+function tableInsertionCallback(err) {
+    if (err) {
+	console.log("Table insertion error",err);
+    } else {
+	console.log("entry inserted");
+    }
+}
+function tableCreationCallback(err) {
+    if (err) {
+	console.log("Table creation error",err);
+    } else {
+	console.log("Database created");
+
+    }
+}
 function fileNotFound(req, res) {
     let url = req.url;
     res.type('text/plain');
