@@ -8,10 +8,10 @@
 function FirstCard() {
 	return React.createElement(
 		"div",
-		{ className: "textCard" },
+		{ className: "textCard"},
 		React.createElement(
 			"p",
-			null,
+			 {id:"output"},
 			"\"Hello, world!\""
 		)
 	);
@@ -20,7 +20,7 @@ function FirstCard() {
 // Another component
 function FirstInputCard() {
 	return React.createElement("div", { className: "textCard" }, 
-			React.createElement("textarea", { onKeyPress: checkReturn })
+			React.createElement("textarea", {id:"input", onKeyPress: checkReturn })
 		);
 }
 
@@ -42,8 +42,7 @@ function Cards(){
 
 function Save(){
 	return React.createElement("div", { className: "save" }, 
-			React.createElement("button", { onClick:function(){
-					console.log("go to reiview");}}, "Save") 
+			React.createElement("button", { onClick:saveToDB}, "Save") 
 		);
 }
 
@@ -67,6 +66,57 @@ ReactDOM.render(main, document.getElementById('root'));
 // onKeyPress function for the textarea element
 // When the charCode is 13, the user has hit the return key
 function checkReturn(event) {
+	let english = document.getElementById("input").textContent;
+	let url = "http://server162.site:51296/translate?english="+input;
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	if (!xhr ) {
+	alert('UNABLE TO translate');
+	return;
+	}
+
+	// Load some functions into response handlers.
+	xhr.onload = function() {
+		let responseStr = xhr.responseText;  // get the JSON string 
+		let object = JSON.parse(responseStr);  // turn it into an object
+		console.log(object);
+	};
+
+	xhr.onerror = function() {
+		alert('Woops, there was an error making the request.');
+	};
+
+	// Actually send request to server
+	xhr.send();
+
 	console.log(event.charCode);
 }
 
+
+
+function saveToDB(event){
+	let input = document.getElementById("input").textContent;
+	let output = document.getElementById("output").textContent;
+	let url = "http://server162.site:51296/save?input="+input+"&output="+output;
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', url, true);
+	if (!xhr ) {
+	alert('UNABLE TO STORE DB');
+	return;
+	}
+
+	// Load some functions into response handlers.
+	xhr.onload = function() {
+		let responseStr = xhr.responseText;  // get the JSON string 
+		let object = JSON.parse(responseStr);  // turn it into an object
+		// let result = JSON.stringify(object, undefined, 2);
+	};
+
+	xhr.onerror = function() {
+		alert('Woops, there was an error making the request.');
+	};
+
+	// Actually send request to server
+	xhr.send();
+
+}

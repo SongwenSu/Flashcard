@@ -59,6 +59,28 @@ function tableCreationCallback(err) {
 	db.close();
     }
 }
+function saveDB(req, res, next){
+	let qobj = req.query;
+	if(qObj.input != undefined){//TODO: double check the condition
+        let english = qObj.english;
+        let translate = qObj.translate;
+        const inStr = `INSERT INTO flashcards (
+					sourceText,
+					translateText,
+					numShown,
+					numCorrect
+					) VALUES
+					(@0, @1, 0, 0)`;
+		//console.log(inStr);
+		db.run(inStr, english, translate, tableInsertionCallback);
+    	res.json({"status":"Good"});	
+    }
+    else {
+		next();
+    }
+
+}
+
 // server and browser
 function queryHandler(req, res, next) {
     let qObj = req.query;
@@ -84,15 +106,7 @@ function queryHandler(req, res, next) {
 					"Spanish": translate
 				});	
 
-				const inStr = `INSERT INTO flashcards (
-					sourceText,
-					translateText,
-					numShown,
-					numCorrect
-					) VALUES
-					(@0, @1, 0, 0)`;
-				//console.log(inStr);
-				db.run(inStr, english, translate, tableInsertionCallback);
+				
 				//res.json( {"translation":translate});
 				//res.statusCode = 200;
 			}
@@ -143,6 +157,7 @@ function fileNotFound(req, res) {
 const app = express()
 app.use(express.static('public'));  // can I find a static file? 
 app.get('/translate', queryHandler );   // if not, is it a valid query?
+app.get('/save', saveDB);
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )

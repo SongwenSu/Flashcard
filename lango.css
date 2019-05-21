@@ -47,6 +47,7 @@ div.cards {
 div.textCard {
     flex:1;
     display: flex;
+    flex-direction: column;
     background-color: #ffffff;
     border-style: solid;
     border-width: 0.2em;
@@ -78,6 +79,7 @@ div.save> button{
 div.footnote{
     flex: 0.5;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
     background-color:#606B9B;
@@ -85,6 +87,7 @@ div.footnote{
 }
 div.footnote > h1{
     font-size: 1.3em;
+    text-align: center;
     color: #FFFFFF;
 }
 /* don't get weird blue border when I type */
@@ -94,4 +97,5 @@ textarea:focus {
 
 textarea {
     border: none;
+    text-align: center;
 }
