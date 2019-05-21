@@ -4,9 +4,10 @@ const express = require('express')
 const port = 51296
 
 // server interact wiht apis
+const root = "./public/";
+
 const APIrequest = require('request');
 const http = require('http');
-
 const APIkey = "AIzaSyC5jj2sM_3VyipWCB6iTnPv1EtuXsVckVw";  // ADD API KEY HERE
 const url = "https://translation.googleapis.com/language/translate/v2?key="+APIkey
 const sqlite3 = require("sqlite3").verbose();  // use sqlite
@@ -28,7 +29,7 @@ process.on('SIGINT', function() {
 // If the table already exists, causes an error.
 // Fix the error by removing or renaming Flashcards.db
 const cmdStr = `CREATE TABLE flashcards (
-					userID INTEGER PRIMARY KEY AUTOINCREMENT, 
+					ID INTEGER PRIMARY KEY AUTOINCREMENT, 
 					sourceText TEXT,
 					translateText TEXT,
 					numShown INT,
@@ -59,6 +60,32 @@ function tableCreationCallback(err) {
 	db.close();
     }
 }
+function saveDB(req, res, next){
+	let qobj2 = req.query;
+	console.log("my object");
+	//console.log(qObj);
+	if(req.query.input != undefined){//TODO: double check the condition
+        let english = req.query.input;
+        let translate = req.query.output;
+        console.log("translate");
+        console.log(english + translate);
+        const inStr = `INSERT INTO flashcards (
+					sourceText,
+					translateText,
+					numShown,
+					numCorrect
+					) VALUES
+					(@0, @1, 0, 0)`;
+		//console.log(inStr);
+		db.run(inStr, english, translate, tableInsertionCallback);
+    	res.json({"status":"Good"});	
+    }
+    else {
+		next();
+    }
+
+}
+
 // server and browser
 function queryHandler(req, res, next) {
     let qObj = req.query;
@@ -84,15 +111,7 @@ function queryHandler(req, res, next) {
 					"Spanish": translate
 				});	
 
-				const inStr = `INSERT INTO flashcards (
-					sourceText,
-					translateText,
-					numShown,
-					numCorrect
-					) VALUES
-					(@0, @1, 0, 0)`;
-				//console.log(inStr);
-				db.run(inStr, english, translate, tableInsertionCallback);
+				
 				//res.json( {"translation":translate});
 				//res.statusCode = 200;
 			}
@@ -141,8 +160,9 @@ function fileNotFound(req, res) {
 
 // put together the server pipeline
 const app = express()
-app.use(express.static('public'));  // can I find a static file? 
+app.use(express.static(root,{index:'lango.html'}));  // can I find a static file? 
 app.get('/translate', queryHandler );   // if not, is it a valid query?
+app.get('/save', saveDB);
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )
