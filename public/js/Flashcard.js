@@ -90,9 +90,9 @@ var Main = function (_React$Component2) {
 
 		var _this2 = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
-		_this2.state = { text: "", value: "" };
 		_this2.onClick = _this2.onClick.bind(_this2);
 		_this2.onChange = _this2.onChange.bind(_this2);
+		_this2.state = { output: "", value: "" };
 		return _this2;
 	}
 
@@ -101,8 +101,8 @@ var Main = function (_React$Component2) {
 		value: function onClick(event) {
 			var _this3 = this;
 
-			this.setState({ text: " ", value: " " }, function () {
-				console.log(_this3.state.text, "setstate");
+			this.setState({ output: " ", value: " " }, function () {
+				console.log(_this3.state.output, "setstate");
 			});
 			saveToDB();
 		}
@@ -145,7 +145,7 @@ var Main = function (_React$Component2) {
 						React.createElement(
 							"p",
 							{ id: "output" },
-							this.state.text
+							this.state.output
 						)
 					)
 				),
@@ -225,6 +225,8 @@ function saveToDB(event) {
 		var responseStr = xhr.responseText; // get the JSON string 
 		console.log(responseStr);
 		var object = JSON.parse(responseStr); // turn it into an object
+		document.getElementById("input").value = "";
+		document.getElementById("output").textContent = "";
 		// let result = JSON.stringify(object, undefined, 2);
 	};
 

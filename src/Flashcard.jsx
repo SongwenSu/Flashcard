@@ -63,14 +63,14 @@ class Footnote extends React.Component{
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {text:"", value:""};
 		this.onClick = this.onClick.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this.state = {output:"", value:""};
 	}
 
 	onClick(event) {
-		this.setState({text:" ", value:" " }, () => {
-			console.log(this.state.text,"setstate");});
+		this.setState({output:" ", value:" " }, () => {
+			console.log(this.state.output,"setstate");});
 		saveToDB();
 	}
 
@@ -89,7 +89,7 @@ class Main extends React.Component {
 						<textarea id="input" onChange={this.onChange} onKeyPress={keyListener} value={this.state.value} ></textarea> 
 					</div>
 					<div className="textCard">
-						<p id="output">{this.state.text}</p>
+						<p id="output">{this.state.output}</p>
 					</div>
 				</div>
 				<div className="save">
@@ -160,6 +160,8 @@ function saveToDB(event){
 		let responseStr = xhr.responseText;  // get the JSON string 
 		console.log(responseStr);
 		let object = JSON.parse(responseStr);  // turn it into an object
+		document.getElementById("input").value = "";
+		document.getElementById("output").textContent = "";
 		// let result = JSON.stringify(object, undefined, 2);
 	};
 
