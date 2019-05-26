@@ -14,6 +14,7 @@ const sqlite3 = require("sqlite3").verbose();  // use sqlite
 const fs = require("fs"); // file system
 const dbFileName = "Flashcards.db";
 // makes the object that represents the database in our code
+
 const db = new sqlite3.Database(dbFileName);  // object, not database.
 process.on('SIGINT', function() {
 	db.all ( 'SELECT * FROM flashcards', dataCallback);
@@ -28,7 +29,7 @@ process.on('SIGINT', function() {
 // Initialize table.
 // If the table already exists, causes an error.
 // Fix the error by removing or renaming Flashcards.db
-const cmdStr = `CREATE TABLE flashcards (
+const cmdStr = `CREATE TABLE IF NOT EXISTS flashcards (
 					ID INTEGER PRIMARY KEY AUTOINCREMENT, 
 					sourceText TEXT,
 					translateText TEXT,
