@@ -29,7 +29,8 @@ var Main = function (_React$Component) {
 		value: function makeRequest(word) {
 			var _this2 = this;
 
-			fetch('translate?english=' + word).then(function (res) {
+			console.log(word);
+			fetch('/translate?english=' + word).then(function (res) {
 				return res.text();
 			}).then(function (res) {
 				var translation = JSON.parse(res);
@@ -44,7 +45,7 @@ var Main = function (_React$Component) {
 				console.log("here");
 				alert("missing translated word");
 			} else {
-				fetch("save?input=" + this.state.value + "&output=" + this.state.output).then(function (res) {
+				fetch("/save?input=" + this.state.value + "&output=" + this.state.output).then(function (res) {
 					return res.text();
 				}).then(function (res) {
 					console.log(res);

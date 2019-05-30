@@ -13,7 +13,8 @@ class Main extends React.Component {
 	}
 
 	makeRequest(word) {
-		fetch('translate?english='+ word)
+		console.log(word);
+		fetch('/translate?english='+ word)
 		.then(res =>  res.text())
 		.then(res => {
 			const translation = JSON.parse(res);	
@@ -27,7 +28,7 @@ class Main extends React.Component {
 			console.log("here");
 			alert("missing translated word");
 		} else {
-			fetch(`save?input=${this.state.value}&output=${this.state.output}`)
+			fetch(`/save?input=${this.state.value}&output=${this.state.output}`)
 			.then(res => res.text())
 			.then(res => {
 				console.log(res)

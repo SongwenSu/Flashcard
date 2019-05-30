@@ -1,10 +1,15 @@
 {
   "name": "Flashcard",
   "version": "1.0.0",
-  "description": "",
-  "main": "createDB.js",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite3": "^4.0.8"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +21,6 @@
   "bugs": {
     "url": "https://github.com/SongwenSu/Flashcard/issues"
   },
-  "homepage": "https://github.com/SongwenSu/Flashcard#readme"
+  "homepage": "https://github.com/SongwenSu/Flashcard#readme",
+  "description": ""
 }
