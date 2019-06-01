@@ -1,4 +1,3 @@
-
 class Main extends React.Component {
 	constructor(props) {
 		super(props);
@@ -10,6 +9,7 @@ class Main extends React.Component {
 		this.makeRequest = this.makeRequest.bind(this);
 		this.keyListener = this.keyListener.bind(this);
 		this.saveToDB = this.saveToDB.bind(this);
+		this.goReview = this.goReview.bind(this);
 	}
 
 	makeRequest(word) {
@@ -56,7 +56,10 @@ class Main extends React.Component {
 	}
 
 	goReview(event) {
-		console.log("go review");
+		console.log("go review"); //TODO
+		let path = '/user/review.html';
+		this.props.history.push(path);
+		
 	}
 	render() {
 		return(
@@ -85,76 +88,6 @@ class Main extends React.Component {
 	}
 
 }
-ReactDOM.render(<Main/>, document.getElementById('root'));
-// function keyListener(event){
-// 	const ENTER_KEY = 13;
-// 	if(event.key == "Enter"){
-// 		checkReturn();
-// 	}
-// }
 
-// function goReview(event) {
-// 	console.log("go Review");
-// }
 
-// function checkReturn(event) {
-// 	console.log("making request");
-// 	let english = document.getElementById("input").value;
-// 	console.log(english);
-// 	let url = "translate?english="+english;
-// 	let xhr = new XMLHttpRequest();
-// 	xhr.open('GET', url, true);
-// 	if (!xhr ) {
-// 	alert('UNABLE TO translate');
-// 	return;
-// 	}
-
-// 	// Load some functions into response handlers.
-// 	xhr.onload = function() {
-// 		let responseStr = xhr.responseText;  // get the JSON string 
-// 		let object = JSON.parse(responseStr);  // turn it into an object
-// 		console.log(object);
-// 		document.getElementById("output").textContent = object.Spanish;
-// 	};
-
-// 	xhr.onerror = function(err) {
-
-// 		alert(err+'Woops, there was an error making the request.');
-// 	};
-
-// 	// Actually send request to server
-// 	xhr.send();
-
-// 	//console.log(event.charCode);
-// }
-// function saveToDB(event){
-// 	console.log("Going to Save");
-// 	let input = document.getElementById("input").value;
-// 	let output = document.getElementById("output").textContent;
-// 	console.log(input + ' ' + output);	
-// 	let url = "save?input="+input+"&output="+output;
-// 	let xhr = new XMLHttpRequest();
-// 	xhr.open('GET', url, true);
-// 	if (!xhr ) {
-// 	alert('UNABLE TO STORE DB');
-// 	return;
-// 	}
-
-// 	// Load some functions into response handlers.
-// 	xhr.onload = function() {
-// 		let responseStr = xhr.responseText;  // get the JSON string 
-// 		console.log(responseStr);
-// 		let object = JSON.parse(responseStr);  // turn it into an object
-// 		// document.getElementById("input").value = "";
-// 		// document.getElementById("output").textContent = "";
-// 		// let result = JSON.stringify(object, undefined, 2);
-// 	};
-
-// 	xhr.onerror = function() {
-// 		alert('Woops, there was an error making the request.');
-// 	};
-
-// 	// Actually send request to server
-// 	xhr.send();
-
-// }
+ReactDOM.render(<Main />, document.getElementById('root'));

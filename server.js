@@ -52,11 +52,11 @@ const flashcard_table = `CREATE TABLE IF NOT EXISTS flashcards (
 						translateText TEXT,
 						numShown INT,
 						numCorrect INT,
-						userID TEXT
+						userID INT
 						)`;
 
 const user_table = `CREATE TABLE IF NOT EXISTS users (
-					id TEXT, 
+					id INT, 
 					firstName TEXT,
 					lastName TEXT)`;
 db.run(flashcard_table, tableCreationCallback);
@@ -169,16 +169,17 @@ function printURL (req, res, next) {
 
 function checkTable(req, res){
 	if(req.user){
-		const sql = 'SELECT userID FROM flashcards WHERE id = ?'; // TODO: unable to check properly
+		let sql = 'SELECT * FROM flashcards WHERE userID = ?'; 
 		console.log(req.user.data);
 		db.get(sql, [req.user.data], (err, rows) => {
 			if (err) {
 			throw err;
 			}
-			if(rows=="") {
-				res.redirect('/user/main.html');
+			console.log(rows);
+			if(rows) {
+				res.redirect('/user/review.html'); // TODO: FIX ME
 			} else {
-				res.redirect('/user/review.html');
+				res.redirect('/user/main.html');
 			}
 		});
 	}
@@ -187,9 +188,9 @@ function checkTable(req, res){
 
 function isAuthenticated(req, res, next) {
     if (req.user) {
-	console.log("Req.session:",req.session);
-	console.log("Req.user:",req.user);
-	next();
+		// console.log("Req.session:",req.session);
+		// console.log("Req.user:",req.user);
+		next();
     } else {
 		res.redirect('/lango.html');
     }
@@ -206,8 +207,8 @@ function loginAuthenticated(req, res, next){
 }
 
 function gotProfile(accessToken, refreshToken, profile, done) {
-	console.log("Google profile",profile);
-	console.log("ID",profile.id);
+	// console.log("Google profile",profile);
+	// console.log("ID",profile.id);
 	let google_id = profile.id
 	let firstName = profile.name.familyName;
 	let lastName = profile.name.givenName;
@@ -243,12 +244,12 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 }
 
 passport.serializeUser((dbRowID, done) => {
-    console.log("SerializeUser. Input is",dbRowID);
+    // console.log("SerializeUser. Input is",dbRowID);
     done(null, dbRowID);
 });
 
 passport.deserializeUser((dbRowID, done) => {
-    console.log("deserializeUser. Input is:", dbRowID);
+    // console.log("deserializeUser. Input is:", dbRowID);
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
