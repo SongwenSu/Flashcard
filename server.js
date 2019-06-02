@@ -186,6 +186,20 @@ function checkTable(req, res){
 	
 }
 
+function getCards(req, res){
+	if(req.user){
+		let sql = 'SELECT * FROM flashcards WHERE userID = ?'; 
+		console.log(req.user.data);
+		db.all(sql, [req.user.data], (err, rows) => {
+			if (err) {
+				throw err;
+			}
+			console.log(rows);
+			res.json(rows);
+		});
+	}
+}
+
 function isAuthenticated(req, res, next) {
     if (req.user) {
 		// console.log("Req.session:",req.session);
@@ -298,6 +312,7 @@ app.get('/user/*', isAuthenticated, // only pass on to following function if
 app.get('/user/check',isAuthenticated, checkTable);
 app.get('/translate',isAuthenticated, queryHandler );  
 app.get('/save', isAuthenticated, saveDB);
+app.get('/getCards', isAuthenticated, getCards);
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )

@@ -14,6 +14,7 @@ var Review = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this, props));
 
+		_this.state = { data: "" };
 		_this.goMain = _this.goMain.bind(_this);
 		_this.nextCard = _this.nextCard.bind(_this);
 		return _this;
@@ -28,6 +29,22 @@ var Review = function (_React$Component) {
 		key: "nextCard",
 		value: function nextCard() {
 			console.log("display next cards");
+		}
+	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			fetch('/getCards').then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				var rows = JSON.parse(res);
+				var n = Object.keys(rows).length;
+				var display = rows[Math.floor(Math.random() * n)];
+				console.log(rows);
+				console.log(display.translateText);
+				_this2.setState({ data: display.translateText });
+			});
 		}
 	}, {
 		key: "render",
@@ -60,7 +77,11 @@ var Review = function (_React$Component) {
 					React.createElement(
 						"div",
 						{ className: "textCard" },
-						React.createElement("p", { id: "output" })
+						React.createElement(
+							"p",
+							{ id: "output" },
+							this.state.data
+						)
 					)
 				),
 				React.createElement(

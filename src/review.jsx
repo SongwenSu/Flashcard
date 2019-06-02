@@ -1,6 +1,7 @@
 class Review extends React.Component {
 	constructor(props) {
-        super(props);
+		super(props);
+		this.state = {data:""};
         this.goMain = this.goMain.bind(this);
         this.nextCard = this.nextCard.bind(this);
     }   
@@ -10,7 +11,18 @@ class Review extends React.Component {
     nextCard(){
         console.log("display next cards");
     }
-
+	componentDidMount(){
+		fetch('/getCards')
+		.then(res=> res.text())
+		.then(res=>{
+			let rows = JSON.parse(res);
+			let n = Object.keys(rows).length;
+			let display = rows[Math.floor(Math.random()*n)];
+			console.log(rows);
+			console.log(display.translateText);
+			this.setState({data: display.translateText});
+		});
+	}
 	render() {
 		return(
 			<main>
@@ -23,7 +35,7 @@ class Review extends React.Component {
 						<textarea id="input" ></textarea> 
 					</div>
 					<div className="textCard">
-						<p id="output"></p>
+						<p id="output">{this.state.data}</p>
 					</div>
 				</div>
 				<div className="next">
