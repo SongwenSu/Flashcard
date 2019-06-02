@@ -1,0 +1,81 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+
+main{
+	min-height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+
+div.left{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+
+	background-image: linear-gradient(to right, #606B9B, #606B9A);
+	border-right: solid 0px #fff;
+	filter: drop-shadow(0 0 30px #333);
+}
+
+div.text-box{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	justify-content: center;
+
+}
+
+div.text-box > h1{
+	font-family: 'Raleway', sans-serif;
+	font-weight: 900;
+	font-size: 65px;
+	color: white;
+
+	line-height: 8px;
+}
+
+div.text-box > h2{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 300;
+	size: 35px;
+	color: #70C7A9;
+
+	line-height: 5px;
+}
+
+div.right{
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	justify-content: center;
+
+}
+
+div.green-login{
+	flex: 0.5;
+	display: flex;
+	background-color: #70C7A9;
+	flex-direction: row;
+
+	align-items: center;
+	align-self: center;
+}
+
+div.green-login > img{
+	height: 20%;
+	width: 20%;
+
+	margin-left: 3%;
+	margin-right: 3%;
+}
+
+div.green-login > p{
+	color: white;
+	font-size: 25px;
+
+	white-space: nowrap;
+}
