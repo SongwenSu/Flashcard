@@ -14,7 +14,7 @@ var Review = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this, props));
 
-		_this.state = { data: "" };
+		_this.state = { data: "", redirect: false };
 		_this.goMain = _this.goMain.bind(_this);
 		_this.nextCard = _this.nextCard.bind(_this);
 		return _this;
@@ -24,8 +24,7 @@ var Review = function (_React$Component) {
 		key: "goMain",
 		value: function goMain() {
 			console.log("go back to main");
-			var path = 'user/main.html';
-			this.props.history.push(path);
+			window.location.href = "main.html";
 		}
 	}, {
 		key: "nextCard",
@@ -65,7 +64,7 @@ var Review = function (_React$Component) {
 					React.createElement(
 						"h1",
 						{ id: "logo" },
-						"\"Lango!\""
+						"Lango!"
 					)
 				),
 				React.createElement(

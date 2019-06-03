@@ -57,8 +57,7 @@ class Main extends React.Component {
 
 	goReview(event) {
 		console.log("go review"); //TODO
-		// let path = '/user/review.html';
-		// this.props.history.push(path);
+		window.location.href = "review.html";
 		
 	}
 	render() {
@@ -66,7 +65,7 @@ class Main extends React.Component {
 			<main>
 				<div className="top">
 					<button onClick={this.goReview}>Start Review</button>
-					<h1 id = "logo">"Lango!"</h1>
+					<h1 id = "logo">Lango!</h1>
 				</div>
 				<div className="cards">
 					<div className="textCard">

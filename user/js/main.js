@@ -82,8 +82,7 @@ var Main = function (_React$Component) {
 		key: "goReview",
 		value: function goReview(event) {
 			console.log("go review"); //TODO
-			// let path = '/user/review.html';
-			// this.props.history.push(path);
+			window.location.href = "review.html";
 		}
 	}, {
 		key: "render",
@@ -102,7 +101,7 @@ var Main = function (_React$Component) {
 					React.createElement(
 						"h1",
 						{ id: "logo" },
-						"\"Lango!\""
+						"Lango!"
 					)
 				),
 				React.createElement(

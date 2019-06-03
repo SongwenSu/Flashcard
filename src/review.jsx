@@ -1,14 +1,13 @@
 class Review extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {data:""};
+		this.state = {data:"", redirect: false};
         this.goMain = this.goMain.bind(this);
         this.nextCard = this.nextCard.bind(this);
     }   
     goMain(){
 		console.log("go back to main");
-		let path = 'user/main.html';
-		this.props.history.push(path);
+		window.location.href = "main.html";
     }
     nextCard(){
         console.log("display next cards");
@@ -25,12 +24,13 @@ class Review extends React.Component {
 			this.setState({data: display.translateText});
 		});
 	}
+
 	render() {
 		return(
 			<main>
 				<div className="top">
 					<button onClick={this.goMain}>Add</button>
-					<h1 id = "logo">"Lango!"</h1>
+					<h1 id = "logo">Lango!</h1>
 				</div>
 				<div className="cards">
 					<div className="inputTextCard">
