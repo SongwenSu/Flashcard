@@ -31,7 +31,7 @@ div.text-box{
 div.text-box > h1{
 	font-family: 'Raleway', sans-serif;
 	font-weight: 900;
-	font-size: 65px;
+	font-size: 8vh;
 	color: white;
 
 	line-height: 8px;
@@ -40,7 +40,7 @@ div.text-box > h1{
 div.text-box > h2{
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
-	size: 35px;
+	size: 2vh;
 	color: #70C7A9;
 
 	line-height: 5px;
@@ -75,7 +75,40 @@ div.green-login > img{
 
 div.green-login > p{
 	color: white;
-	font-size: 25px;
+	font-size: 1.5vw;
 
 	white-space: nowrap;
+}
+
+@media only screen and (max-width: 1024px){
+	main{
+		min-height: 100vh;
+	    display: flex;
+	    flex-direction: column;
+	}
+
+	div.left{
+		flex: 3;
+		display: flex;
+		flex-direction: column;
+
+		background-image: linear-gradient(to right, #606B9B, #606B9A);
+		border-right: solid 0px #fff;
+		filter: drop-shadow(0 0 30px #333);
+	}	
+
+	div.right{
+		flex: 1;
+		display: flex;
+		flex-direction: row;
+		align-content: center;
+		justify-content: center;
+	}
+
+	div.green-login > p{
+		color: white;
+		font-size: 3vw;
+
+		white-space: nowrap;
+	}
 }
