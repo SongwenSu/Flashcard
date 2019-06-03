@@ -219,7 +219,6 @@ function loginAuthenticated(req, res, next){
 		next();
 	}
 }
-
 function gotProfile(accessToken, refreshToken, profile, done) {
 	// console.log("Google profile",profile);
 	// console.log("ID",profile.id);

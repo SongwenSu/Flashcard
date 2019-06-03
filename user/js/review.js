@@ -24,6 +24,8 @@ var Review = function (_React$Component) {
 		key: "goMain",
 		value: function goMain() {
 			console.log("go back to main");
+			var path = 'user/main.html';
+			this.props.history.push(path);
 		}
 	}, {
 		key: "nextCard",
@@ -71,12 +73,12 @@ var Review = function (_React$Component) {
 					{ className: "cards" },
 					React.createElement(
 						"div",
-						{ className: "textCard" },
+						{ className: "inputTextCard" },
 						React.createElement("textarea", { id: "input" })
 					),
 					React.createElement(
 						"div",
-						{ className: "textCard" },
+						{ className: "displayTextCard" },
 						React.createElement(
 							"p",
 							{ id: "output" },

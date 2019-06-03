@@ -82,8 +82,8 @@ var Main = function (_React$Component) {
 		key: "goReview",
 		value: function goReview(event) {
 			console.log("go review"); //TODO
-			var path = '/user/review.html';
-			this.props.history.push(path);
+			// let path = '/user/review.html';
+			// this.props.history.push(path);
 		}
 	}, {
 		key: "render",

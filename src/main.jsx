@@ -57,8 +57,8 @@ class Main extends React.Component {
 
 	goReview(event) {
 		console.log("go review"); //TODO
-		let path = '/user/review.html';
-		this.props.history.push(path);
+		// let path = '/user/review.html';
+		// this.props.history.push(path);
 		
 	}
 	render() {

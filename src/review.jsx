@@ -6,7 +6,9 @@ class Review extends React.Component {
         this.nextCard = this.nextCard.bind(this);
     }   
     goMain(){
-        console.log("go back to main");
+		console.log("go back to main");
+		let path = 'user/main.html';
+		this.props.history.push(path);
     }
     nextCard(){
         console.log("display next cards");
@@ -31,10 +33,10 @@ class Review extends React.Component {
 					<h1 id = "logo">"Lango!"</h1>
 				</div>
 				<div className="cards">
-					<div className="textCard">
+					<div className="inputTextCard">
 						<textarea id="input" ></textarea> 
 					</div>
-					<div className="textCard">
+					<div className="displayTextCard">
 						<p id="output">{this.state.data}</p>
 					</div>
 				</div>

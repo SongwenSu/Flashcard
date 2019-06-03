@@ -44,7 +44,7 @@ div.cards {
     margin-left: 10%;
     margin-right: 10%;
 }
-div.textCard {
+div.inputTextCard {
     flex:1;
     display: flex;
     flex-direction: column;
@@ -54,8 +54,23 @@ div.textCard {
     border-color: #A9A9A9;
     align-content: center;
     justify-content: center;
-    height: 350px;
     margin-right: 5%;
+    width: 50vw;
+    margin-bottom: 3%;
+}
+div.displayTextCard {
+    flex:4;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-style: solid;
+    border-width: 0.2em;
+    border-color: #A9A9A9;
+    align-content: center;
+    justify-content: center;
+    width: 50vw;
+    margin-right: 5%;
+    margin-bottom: 3%;
 }
 div.textCard > p {
     display: flex;
