@@ -93,7 +93,7 @@ h2 {
 }
 
 
-input,
+/* input,
 textarea {
   padding: 8px;
   width: 100%;
@@ -111,7 +111,7 @@ textarea:focus {
 textarea {
   max-height: 80px;
   resize: vertical;
-}
+} */
 
 .btn-primary {
   padding: 8px 16px;

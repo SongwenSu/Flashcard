@@ -6,6 +6,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import { Card, CardFront, CardBack, CardInput, CardTextarea } from './index.js';
+
 var Review = function (_React$Component) {
 	_inherits(Review, _React$Component);
 
@@ -122,14 +124,14 @@ var Review = function (_React$Component) {
 					React.createElement(
 						"div",
 						{ className: "inputTextCard" },
-						React.createElement("textarea", { id: "input", onChange: this.onChange, onKeyPress: this.keyListener, value: this.state.input })
+						React.createElement("textarea", { id: "myinput", onChange: this.onChange, onKeyPress: this.keyListener, value: this.state.input })
 					),
 					React.createElement(
 						"div",
 						{ className: "displayTextCard" },
 						React.createElement(
 							"p",
-							{ id: "output" },
+							{ id: "myoutput" },
 							this.state.data
 						)
 					)

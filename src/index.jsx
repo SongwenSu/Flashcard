@@ -11,7 +11,7 @@
 const cardContainer = document.querySelector('.react-card');
 
 // React component for form inputs
-class CardInput extends React.Component {
+export class CardInput extends React.Component {
   render() {
     return(
       <fieldset>
@@ -22,7 +22,7 @@ class CardInput extends React.Component {
 }
 
 // React component for textarea
-class CardTextarea extends React.Component {
+export class CardTextarea extends React.Component {
   render() {
     return(
       <fieldset>
@@ -34,7 +34,7 @@ class CardTextarea extends React.Component {
 
 
 // React component for the front side of the card
-class CardFront extends React.Component {
+export class CardFront extends React.Component {
   render(props) {
     return(
       <div className='card-side side-front'>
@@ -47,7 +47,7 @@ class CardFront extends React.Component {
 }
 
 // React component for the back side of the card
-class CardBack extends React.Component {
+export class CardBack extends React.Component {
   render(props) {
     return(
       <div className='card-side side-back'>
@@ -60,7 +60,7 @@ class CardBack extends React.Component {
 }
 
 // React component for the card (main component)
-class Card extends React.Component {
+export class Card extends React.Component {
   render() {
     return(
       <div className='card-container'>
@@ -75,4 +75,4 @@ class Card extends React.Component {
 }
 
 // Render Card component
-ReactDOM.render(<Card />, cardContainer);
+//ReactDOM.render(<Card />, cardContainer);

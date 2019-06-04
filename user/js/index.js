@@ -6,14 +6,19 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/* This flipcard component is based on the flipcard component by
-   Alex Devero (https://codepen.io/alexdevero/pen/pRjNmW) */
+/*
+   This flipcard component is based on the flipcard component by
+   Alex Devero, at:
+   
+      https://reactjsexample.com/react-flipping-card-with-tutorial/
+
+   It was modified for ECS 162 by Nina Amenta, May 2019.
+*/
 
 var cardContainer = document.querySelector('.react-card');
 
 // React component for form inputs
-
-var CardInput = function (_React$Component) {
+export var CardInput = function (_React$Component) {
   _inherits(CardInput, _React$Component);
 
   function CardInput() {
@@ -37,9 +42,7 @@ var CardInput = function (_React$Component) {
 }(React.Component);
 
 // React component for textarea
-
-
-var CardTextarea = function (_React$Component2) {
+export var CardTextarea = function (_React$Component2) {
   _inherits(CardTextarea, _React$Component2);
 
   function CardTextarea() {
@@ -63,9 +66,7 @@ var CardTextarea = function (_React$Component2) {
 }(React.Component);
 
 // React component for the front side of the card
-
-
-var CardFront = function (_React$Component3) {
+export var CardFront = function (_React$Component3) {
   _inherits(CardFront, _React$Component3);
 
   function CardFront() {
@@ -97,9 +98,7 @@ var CardFront = function (_React$Component3) {
 }(React.Component);
 
 // React component for the back side of the card
-
-
-var CardBack = function (_React$Component4) {
+export var CardBack = function (_React$Component4) {
   _inherits(CardBack, _React$Component4);
 
   function CardBack() {
@@ -131,9 +130,7 @@ var CardBack = function (_React$Component4) {
 }(React.Component);
 
 // React component for the card (main component)
-
-
-var Card = function (_React$Component5) {
+export var Card = function (_React$Component5) {
   _inherits(Card, _React$Component5);
 
   function Card() {
@@ -162,6 +159,4 @@ var Card = function (_React$Component5) {
 }(React.Component);
 
 // Render Card component
-
-
-ReactDOM.render(React.createElement(Card, null), cardContainer);
+//ReactDOM.render(<Card />, cardContainer);
