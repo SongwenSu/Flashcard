@@ -99,3 +99,66 @@ textarea {
     border: none;
     text-align: center;
 }
+
+@media only screen and (max-width: 415px){
+
+    div.top > button{
+        background-color:#606B9B;
+        color: #FFFFFF;
+        flex: 1;
+        font-size: 2em;
+        margin-left: 5%;
+        margin-right: 5%;
+        white-space: nowrap;
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    div.cards {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    div.textCard {
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        border-style: solid;
+        border-width: 0.5em;
+        border-color: #A9A9A9;
+        align-content: center;
+        justify-content: center;
+        height: 350px;
+        width: 70vw;
+        margin-bottom: 3%;
+        margin-right: 5%;
+    }
+
+    div.save{
+        flex: 1;
+        margin-left: 70%;
+    }
+
+    div.save> button{
+        background-color: #70C7A9;
+        color: #FFFFFF;
+        flex: 1;
+        font-size: 3em;
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    div.footnote > h1{
+        font-size: 2vw;
+        text-align: center;
+        color: #FFFFFF;
+    }
+}
