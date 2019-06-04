@@ -34,7 +34,7 @@ export class CardTextarea extends React.Component {
 
 
 // React component for the front side of the card
-export class CardFront extends React.Component {
+class CardFront extends React.Component {
   render(props) {
     return(
       <div className='card-side side-front'>

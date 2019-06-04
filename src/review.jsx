@@ -1,4 +1,26 @@
-import {Card, CardFront, CardBack, CardInput, CardTextarea} from './index.js';
+class CardFront extends React.Component {
+  render(props) {
+    return(
+      <div className='card-side side-front'>
+         <div className='card-side-container'>
+              <h2 id='trans'>{this.props.text}</h2>
+        </div>
+      </div>
+    )
+  }
+}
+
+class CardBack extends React.Component {
+  render(props) {
+    return(
+      <div className='card-side side-back'>
+         <div className='card-side-container'>
+              <h2 id='congrats'>{this.props.text}</h2>
+        </div>
+      </div>
+    )
+  }
+}
 class Review extends React.Component {
 	constructor(props) {
 		super(props);
@@ -76,19 +98,22 @@ class Review extends React.Component {
 					<button onClick={this.goMain}>Add</button>
 					<h1 id = "logo">Lango!</h1>
 				</div>
-				{/* <Card/> */}
+
 				<div className="cards">
 					<div className="inputTextCard">
+				
 						<textarea id="myinput" onChange={this.onChange} onKeyPress={this.keyListener} value={this.state.input}></textarea> 
 					</div>
-					{/* <div className="flipCards"> */}
-						<div className="displayTextCard">
-							<p id="myoutput">{this.state.data}</p>
+					<div className='card-container'>
+						<div className='card-body'>
+							<CardBack text="Correct!" />
+							<CardFront text="Volare" />
 						</div>
-						{/* <div className="displayTextCard">
-							<p>{this.state.src}</p>
-						</div> */}
-					{/* </div> */}
+      		</div>
+					{/* <div className="displayTextCard">
+						<p id="myoutput">{this.state.data}</p>
+					</div> */}
+
 				</div>
 				<div className="next">
 					<button onClick={this.nextCard}>Next</button>

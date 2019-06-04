@@ -66,7 +66,8 @@ export var CardTextarea = function (_React$Component2) {
 }(React.Component);
 
 // React component for the front side of the card
-export var CardFront = function (_React$Component3) {
+
+var CardFront = function (_React$Component3) {
   _inherits(CardFront, _React$Component3);
 
   function CardFront() {
@@ -98,6 +99,8 @@ export var CardFront = function (_React$Component3) {
 }(React.Component);
 
 // React component for the back side of the card
+
+
 export var CardBack = function (_React$Component4) {
   _inherits(CardBack, _React$Component4);
 
