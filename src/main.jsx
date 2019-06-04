@@ -2,7 +2,7 @@ class Main extends React.Component {
 	constructor(props) {
 		super(props);
 		
-		this.state = {output:"", value:""};
+		this.state = {output:"", value:"",user:""};
 
 		this.onClick = this.onClick.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -60,6 +60,16 @@ class Main extends React.Component {
 		window.location.href = "review.html";
 		
 	}
+	
+	componentDidMount(){
+		
+		fetch('/getUser')
+		.then(res=> res.text())
+		.then(res=> {
+			let profile = JSON.parse(res);
+			this.setState({user:profile.firstName});
+		});
+	}
 	render() {
 		return(
 			<main>
@@ -80,7 +90,7 @@ class Main extends React.Component {
 					<button onClick={this.onClick}>Save</button>
 				</div>
 				<div className="footnote">
-					<h1>UserName</h1>
+					<h1>{this.state.user}</h1>
 				</div>
 			</main>
 		);

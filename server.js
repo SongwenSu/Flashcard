@@ -52,11 +52,11 @@ const flashcard_table = `CREATE TABLE IF NOT EXISTS flashcards (
 						translateText TEXT,
 						numShown INT,
 						numCorrect INT,
-						userID INT
+						userID TEXT
 						)`;
 
 const user_table = `CREATE TABLE IF NOT EXISTS users (
-					id INT, 
+					id TEXT PRIMARY KEY, 
 					firstName TEXT,
 					lastName TEXT)`;
 db.run(flashcard_table, tableCreationCallback);
@@ -84,8 +84,6 @@ function tableInsertionCallback(err) {
 }
 function saveDB(req, res, next){
 	let qobj2 = req.query;
-	console.log("my object");
-	console.log("USER ID" + req.user.data);
 	if(req.query.input != undefined){//TODO: double check the condition
         let english = req.query.input;
         let translate = req.query.output;
@@ -97,7 +95,7 @@ function saveDB(req, res, next){
 					userID
 					) VALUES
 					(@0, @1, 0, 0, @2)`;
-		db.run(inStr, english, translate, req.user.data, tableInsertionCallback);
+		db.run(inStr, english, translate, req.user.google_id, tableInsertionCallback);
     	res.json({"status":"Good"});	
     }
     else {
@@ -170,12 +168,12 @@ function printURL (req, res, next) {
 function checkTable(req, res){
 	if(req.user){
 		let sql = 'SELECT * FROM flashcards WHERE userID = ?'; 
-		console.log(req.user.data);
-		db.get(sql, [req.user.data], (err, rows) => {
+		console.log(req.user.google_id);
+		db.get(sql, [req.user.google_id], (err, rows) => {
 			if (err) {
 			throw err;
 			}
-			console.log(rows);
+			console.log("Check table", rows);
 			if(rows) {
 				res.redirect('/user/review.html'); // TODO: FIX ME
 			} else {
@@ -189,14 +187,20 @@ function checkTable(req, res){
 function getCards(req, res){
 	if(req.user){
 		let sql = 'SELECT * FROM flashcards WHERE userID = ?'; 
-		console.log(req.user.data);
-		db.all(sql, [req.user.data], (err, rows) => {
+		console.log(req.user.google_id);
+		db.all(sql, [req.user.google_id], (err, rows) => {
 			if (err) {
 				throw err;
 			}
 			console.log(rows);
 			res.json(rows);
 		});
+	}
+}
+function getUser(req, res)
+{
+	if(req.user){
+		res.json(req.user);
 	}
 }
 
@@ -212,7 +216,7 @@ function isAuthenticated(req, res, next) {
 function loginAuthenticated(req, res, next){
 	if(req.user) {
 		console.log("logged in already");
-		checkTable(req.user.data);
+		checkTable(req.user.google_id);
 		res.redirect('/user/check');
 	} else {
 		console.log("havne't logged in");
@@ -225,12 +229,13 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 	let google_id = profile.id
 	let firstName = profile.name.familyName;
 	let lastName = profile.name.givenName;
-	const sql = 'SELECT firstName FROM users WHERE id = ?'; // TODO: unable to check properly
+	const sql = 'SELECT * FROM users WHERE id = ?'; // TODO: unable to check properly
 	db.get(sql, [google_id], (err, rows) => {
 		if (err) {
 		  throw err;
 		}
-		if(rows==""){
+		console.log("PROFILE", rows);
+		if(!rows){
 			const userInsert = `INSERT INTO users (
 				id, 
 				firstName,
@@ -240,6 +245,11 @@ function gotProfile(accessToken, refreshToken, profile, done) {
 			db.run(userInsert, google_id, firstName, lastName, tableInsertionCallback);
 	
 			console.log("inserting new users");
+			let dbRowID = google_id;
+			done(null, dbRowID); 
+		}else{
+			let dbRowID = google_id;
+			done(null, dbRowID); 
 		}
 	});	
 
@@ -248,12 +258,12 @@ function gotProfile(accessToken, refreshToken, profile, done) {
     // Second arg to "done" will be passed into serializeUser,
     // should be key to get user out of database.
 
-    let dbRowID = google_id;  // temporary! Should be the real unique
+      // temporary! Should be the real unique
     // key for db Row for this user in DB table.
     // Note: cannot be zero, has to be something that evaluates to
     // True.  
 
-    done(null, dbRowID); 
+    
 }
 
 passport.serializeUser((dbRowID, done) => {
@@ -262,12 +272,28 @@ passport.serializeUser((dbRowID, done) => {
 });
 
 passport.deserializeUser((dbRowID, done) => {
+	const sql = 'SELECT * FROM users WHERE id = ?'; // TODO: unable to check properly
+	db.get(sql, [dbRowID], (err, row) => {
+		if (err) {
+		  throw err;
+		}
+		if(row){
+			console.log("inside deserializer",row);
+			let userData = {
+				google_id: row.id,
+				firstName: row.firstName
+			}
+			
+			console.log("inside deserializer",userData);
+			done(null, userData)
+		}
+		// done(null, userData);
+	});	
     // console.log("deserializeUser. Input is:", dbRowID);
     // here is a good place to look up user data in database using
     // dbRowID. Put whatever you want into an object. It ends up
     // as the property "user" of the "req" object. 
-    let userData = {data: dbRowID};
-    done(null, userData);
+
 });
 
 // put together the server pipeline
@@ -311,8 +337,8 @@ app.get('/user/*', isAuthenticated, // only pass on to following function if
 app.get('/user/check',isAuthenticated, checkTable);
 app.get('/translate',isAuthenticated, queryHandler );  
 app.get('/save', isAuthenticated, saveDB);
+app.get('/getUser', isAuthenticated, getUser);
 app.get('/getCards', isAuthenticated, getCards);
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )
-

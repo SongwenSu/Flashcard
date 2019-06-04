@@ -46,6 +46,12 @@ var Review = function (_React$Component) {
 				console.log(display.translateText);
 				_this2.setState({ data: display.translateText });
 			});
+			fetch('/getUser').then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				var profile = JSON.parse(res);
+				_this2.setState({ user: profile.firstName });
+			});
 		}
 	}, {
 		key: "render",
@@ -100,7 +106,7 @@ var Review = function (_React$Component) {
 					React.createElement(
 						"h1",
 						null,
-						"UserName"
+						this.state.user
 					)
 				)
 			);

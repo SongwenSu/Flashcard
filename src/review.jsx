@@ -23,6 +23,12 @@ class Review extends React.Component {
 			console.log(display.translateText);
 			this.setState({data: display.translateText});
 		});
+		fetch('/getUser')
+		.then(res=> res.text())
+		.then(res=> {
+			let profile = JSON.parse(res);
+			this.setState({user:profile.firstName});
+		});
 	}
 
 	render() {
@@ -44,7 +50,7 @@ class Review extends React.Component {
 					<button onClick={this.nextCard}>Next</button>
 				</div>
 				<div className="footnote">
-					<h1>UserName</h1>
+					<h1>{this.state.user}</h1>
 				</div>
 			</main>
 		);

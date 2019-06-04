@@ -14,7 +14,7 @@ var Main = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
-		_this.state = { output: "", value: "" };
+		_this.state = { output: "", value: "", user: "" };
 
 		_this.onClick = _this.onClick.bind(_this);
 		_this.onChange = _this.onChange.bind(_this);
@@ -85,6 +85,18 @@ var Main = function (_React$Component) {
 			window.location.href = "review.html";
 		}
 	}, {
+		key: "componentDidMount",
+		value: function componentDidMount() {
+			var _this4 = this;
+
+			fetch('/getUser').then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				var profile = JSON.parse(res);
+				_this4.setState({ user: profile.firstName });
+			});
+		}
+	}, {
 		key: "render",
 		value: function render() {
 			return React.createElement(
@@ -138,7 +150,7 @@ var Main = function (_React$Component) {
 					React.createElement(
 						"h1",
 						null,
-						"UserName"
+						this.state.user
 					)
 				)
 			);
