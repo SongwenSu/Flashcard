@@ -184,6 +184,59 @@ function checkTable(req, res){
 	
 }
 
+function updateShown(req, res, next){
+	if(req.query.id != undefined){
+		console.log("card id" + req.query.id);
+		let cardID = req.query.id;
+		let shown = 0;
+		const sql1 = 'SELECT * FROM flashcards WHERE id = ?';
+		db.get(sql1, [cardID], (err, row)=>{
+			if(err) {
+				throw err;
+			}
+			if(row) {
+				console.log("this is the row "+ row.numShown);
+			}
+			shown = row.numShown + 1;
+			console.log("shown is " + shown);
+			let sql = 'UPDATE flashcards SET numShown = ? WHERE id = ?';
+			db.run(sql, [shown,cardID], (err, rows)=>{
+			if(err) {
+				throw err;
+			}
+			res.json("success for shown");});			
+		});
+	} else {
+		console.log("id is undefined");
+	}
+}
+
+function updateCorrect(req, res, next){
+	if(req.query.id != undefined){
+		console.log("card id" + req.query.id);
+		let cardID = req.query.id;
+		let correct = 0;
+		const sql1 = 'SELECT * FROM flashcards WHERE id = ?';
+		db.get(sql1, [cardID], (err, row)=>{
+			if(err) {
+				throw err;
+			}
+			if(row) {
+				console.log("this is the row "+ row.numCorrect);
+			}
+			correct = row.numCorrect + 1;
+			let sql = 'UPDATE flashcards SET numCorrect = ? WHERE id = ?';
+			db.run(sql, [correct,cardID], (err, rows)=>{
+			if(err) {
+				throw err;
+			}
+			res.json("success for correct");});			
+		});
+	} else {
+		console.log("id is undefined");
+	}
+}
+
 function getCards(req, res){
 	if(req.user){
 		let sql = 'SELECT * FROM flashcards WHERE userID = ?'; 
@@ -339,6 +392,8 @@ app.get('/translate',isAuthenticated, queryHandler );
 app.get('/save', isAuthenticated, saveDB);
 app.get('/getUser', isAuthenticated, getUser);
 app.get('/getCards', isAuthenticated, getCards);
+app.get('/updateShown', isAuthenticated,updateShown);
+app.get('/updateCorrect', isAuthenticated,updateCorrect);
 app.use( fileNotFound );            // otherwise not found
 
 app.listen(port, function (){console.log('Listening...');} )

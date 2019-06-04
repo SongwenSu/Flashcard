@@ -14,9 +14,12 @@ var Review = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Review.__proto__ || Object.getPrototypeOf(Review)).call(this, props));
 
-		_this.state = { data: "", redirect: false };
+		_this.state = { data: "", redirect: false, src: "", cardID: "", input: "" };
 		_this.goMain = _this.goMain.bind(_this);
 		_this.nextCard = _this.nextCard.bind(_this);
+		_this.onChange = _this.onChange.bind(_this);
+		_this.makeRequest = _this.makeRequest.bind(_this);
+		_this.keyListener = _this.keyListener.bind(_this);
 		return _this;
 	}
 
@@ -29,12 +32,54 @@ var Review = function (_React$Component) {
 	}, {
 		key: "nextCard",
 		value: function nextCard() {
-			console.log("display next cards");
+			var _this2 = this;
+
+			fetch("/updateShown?id=" + this.state.cardID).then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				console.log(JSON.parse(res));
+			});
+			fetch('/getCards').then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				var rows = JSON.parse(res);
+				var n = Object.keys(rows).length;
+				var display = rows[Math.floor(Math.random() * n)];
+				_this2.setState({ data: display.translateText, src: display.sourceText, cardID: display.id });
+			});
+			this.setState({ input: "" });
+		}
+	}, {
+		key: "onChange",
+		value: function onChange(event) {
+			console.log("changing input");
+			this.setState({ input: event.target.value });
+		}
+	}, {
+		key: "keyListener",
+		value: function keyListener(event) {
+			var ENTER_KEY = 13;
+			if (event.key == "Enter") {
+				this.makeRequest(event.target.value);
+				this.setState({ input: "" });
+			}
+		}
+	}, {
+		key: "makeRequest",
+		value: function makeRequest(word) {
+			console.log(word);
+			var flag = 0;
+			this.state.src == word ? flag = 1 : console.log("wrong");
+			flag ? fetch("/updateCorrect?id=" + this.state.cardID).then(function (res) {
+				return res.text();
+			}).then(function (res) {
+				console.log(JSON.parse(res));
+			}) : console.log("incorrect");
 		}
 	}, {
 		key: "componentDidMount",
 		value: function componentDidMount() {
-			var _this2 = this;
+			var _this3 = this;
 
 			fetch('/getCards').then(function (res) {
 				return res.text();
@@ -42,15 +87,13 @@ var Review = function (_React$Component) {
 				var rows = JSON.parse(res);
 				var n = Object.keys(rows).length;
 				var display = rows[Math.floor(Math.random() * n)];
-				console.log(rows);
-				console.log(display.translateText);
-				_this2.setState({ data: display.translateText });
+				_this3.setState({ data: display.translateText, src: display.sourceText, cardID: display.id });
 			});
 			fetch('/getUser').then(function (res) {
 				return res.text();
 			}).then(function (res) {
 				var profile = JSON.parse(res);
-				_this2.setState({ user: profile.firstName });
+				_this3.setState({ user: profile.firstName });
 			});
 		}
 	}, {
@@ -79,7 +122,7 @@ var Review = function (_React$Component) {
 					React.createElement(
 						"div",
 						{ className: "inputTextCard" },
-						React.createElement("textarea", { id: "input" })
+						React.createElement("textarea", { id: "input", onChange: this.onChange, onKeyPress: this.keyListener, value: this.state.input })
 					),
 					React.createElement(
 						"div",

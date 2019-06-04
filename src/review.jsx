@@ -1,17 +1,55 @@
 class Review extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {data:"", redirect: false};
+		this.state = {data:"", redirect: false, src:"",cardID:"", input:""};
         this.goMain = this.goMain.bind(this);
-        this.nextCard = this.nextCard.bind(this);
+		this.nextCard = this.nextCard.bind(this);
+		this.onChange = this.onChange.bind(this);
+		this.makeRequest = this.makeRequest.bind(this);
+		this.keyListener = this.keyListener.bind(this);
     }   
     goMain(){
 		console.log("go back to main");
 		window.location.href = "main.html";
     }
     nextCard(){
-        console.log("display next cards");
-    }
+		fetch(`/updateShown?id=${this.state.cardID}`)
+		.then(res=> res.text())
+		.then(res=>{ console.log(JSON.parse(res));});
+		fetch('/getCards')
+		.then(res=> res.text())
+		.then(res=>{
+			let rows = JSON.parse(res);
+			let n = Object.keys(rows).length;
+			let display = rows[Math.floor(Math.random()*n)];
+			this.setState({data: display.translateText, src: display.sourceText, cardID:display.id});
+		});
+		this.setState({input:""});
+	}
+	onChange(event) {
+		console.log("changing input");
+		this.setState({input: event.target.value});
+	}
+	
+	keyListener(event) {
+		const ENTER_KEY = 13;
+		if(event.key == "Enter"){	
+			this.makeRequest(event.target.value);
+			this.setState({input:""});
+		}
+		
+	}
+	makeRequest(word) {
+		console.log(word);
+		let flag = 0;
+		this.state.src == word ? flag = 1:console.log ("wrong");
+		flag ? fetch(`/updateCorrect?id=${this.state.cardID}`)
+		.then(res=> res.text())
+		.then(res=>{ console.log(JSON.parse(res));}): console.log("incorrect");
+
+	}
+
+
 	componentDidMount(){
 		fetch('/getCards')
 		.then(res=> res.text())
@@ -19,9 +57,8 @@ class Review extends React.Component {
 			let rows = JSON.parse(res);
 			let n = Object.keys(rows).length;
 			let display = rows[Math.floor(Math.random()*n)];
-			console.log(rows);
-			console.log(display.translateText);
-			this.setState({data: display.translateText});
+			this.setState({data: display.translateText, src: display.sourceText, cardID:display.id});
+
 		});
 		fetch('/getUser')
 		.then(res=> res.text())
@@ -40,11 +77,16 @@ class Review extends React.Component {
 				</div>
 				<div className="cards">
 					<div className="inputTextCard">
-						<textarea id="input" ></textarea> 
+						<textarea id="input" onChange={this.onChange} onKeyPress={this.keyListener} value={this.state.input}></textarea> 
 					</div>
-					<div className="displayTextCard">
-						<p id="output">{this.state.data}</p>
-					</div>
+					{/* <div className="flipCards"> */}
+						<div className="displayTextCard">
+							<p id="output">{this.state.data}</p>
+						</div>
+						{/* <div className="displayTextCard">
+							<p>{this.state.src}</p>
+						</div> */}
+					{/* </div> */}
 				</div>
 				<div className="next">
 					<button onClick={this.nextCard}>Next</button>

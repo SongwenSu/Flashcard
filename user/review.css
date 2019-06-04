@@ -44,6 +44,7 @@ div.cards {
     margin-left: 10%;
     margin-right: 10%;
 }
+
 div.inputTextCard {
     flex:1;
     display: flex;
