@@ -62,6 +62,11 @@ class Review extends React.Component {
 		}
 		
 	}
+
+	onFlip(event){
+		document.querySelector(".card-container").classList.toggle("flip");
+	}
+
 	makeRequest(word) {
 		console.log(word);
 		let flag = 0;
@@ -104,15 +109,14 @@ class Review extends React.Component {
 				
 						<textarea id="myinput" onChange={this.onChange} onKeyPress={this.keyListener} value={this.state.input}></textarea> 
 					</div>
-					<div className='card-container'>
-						<div className='card-body'>
-							<CardBack text=this.state.data />
-							<CardFront text=this.state.src />
+					<div className="displayTextCard">
+						<div className='card-container'>
+							<div onClick={this.onFlip} className='card-body'>
+								<CardFront text={this.state.data} />
+								<CardBack text={this.state.src} />
+							</div>
 						</div>
-      				</div>
-					{/* <div className="displayTextCard">
-						<p id="myoutput">{this.state.data}</p>
-					</div> */}
+					</div>
 
 				</div>
 				<div className="next">

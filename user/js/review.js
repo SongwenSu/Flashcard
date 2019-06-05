@@ -127,6 +127,11 @@ var Review = function (_React$Component3) {
 			}
 		}
 	}, {
+		key: 'onFlip',
+		value: function onFlip(event) {
+			document.querySelector(".card-container").classList.toggle("flip");
+		}
+	}, {
 		key: 'makeRequest',
 		value: function makeRequest(word) {
 			console.log(word);
@@ -188,12 +193,16 @@ var Review = function (_React$Component3) {
 					),
 					React.createElement(
 						'div',
-						{ className: 'card-container' },
+						{ className: 'displayTextCard' },
 						React.createElement(
 							'div',
-							{ className: 'card-body' },
-							React.createElement(CardBack, { text: 'Correct!' }),
-							React.createElement(CardFront, { text: 'Volare' })
+							{ className: 'card-container' },
+							React.createElement(
+								'div',
+								{ onClick: this.onFlip, className: 'card-body' },
+								React.createElement(CardFront, { text: this.state.data }),
+								React.createElement(CardBack, { text: this.state.src })
+							)
 						)
 					)
 				),
