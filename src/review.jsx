@@ -106,10 +106,10 @@ class Review extends React.Component {
 					</div>
 					<div className='card-container'>
 						<div className='card-body'>
-							<CardBack text="Correct!" />
-							<CardFront text="Volare" />
+							<CardBack text=this.state.data />
+							<CardFront text=this.state.src />
 						</div>
-      		</div>
+      				</div>
 					{/* <div className="displayTextCard">
 						<p id="myoutput">{this.state.data}</p>
 					</div> */}
