@@ -42,6 +42,7 @@ h2 {
   flex:4;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background-color: #ffffff;
   border-style: solid;
   border-width: 0.2em;
@@ -50,18 +51,18 @@ h2 {
   /* till here */
   position: relative;
   z-index: 1;
-  margin: 32px auto;
-  max-width: 720px;
+  margin-bottom: 5%;
+  /* max-width: 720px; */
   -webkit-perspective: 1000px;
-          perspective: 1000px;
+  perspective: 1000px;
 }
 
 /*- Card body -*/
 .card-body {
-  width: 100%;
+  width: 80%;
   height: 100%;
   -webkit-transform-style: preserve-3d;
-          transform-style: preserve-3d;
+  transform-style: preserve-3d;
   transition: all .7s linear;
 }
 
@@ -100,27 +101,6 @@ h2 {
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);
 }
-
-
-/* input,
-textarea {
-  padding: 8px;
-  width: 100%;
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 1px solid #eee;
-  border-left: 0;
-}
-input:focus,
-textarea:focus {
-  outline: 0;
-  border-bottom: 1px solid #0c81f6;
-}
-
-textarea {
-  max-height: 80px;
-  resize: vertical;
-} */
 
 .btn-primary {
   padding: 8px 16px;
