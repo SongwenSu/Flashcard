@@ -28,7 +28,8 @@ var CardFront = function (_React$Component) {
 						'h2',
 						{ id: 'trans' },
 						this.props.text
-					)
+					),
+					React.createElement('img', { className: 'card-side correct hidden', src: 'js/correct.JPG' })
 				)
 			);
 		}
@@ -82,6 +83,7 @@ var Review = function (_React$Component3) {
 		_this3.onChange = _this3.onChange.bind(_this3);
 		_this3.makeRequest = _this3.makeRequest.bind(_this3);
 		_this3.keyListener = _this3.keyListener.bind(_this3);
+		_this3.onFlip = _this3.onFlip.bind(_this3);
 		return _this3;
 	}
 
@@ -128,7 +130,7 @@ var Review = function (_React$Component3) {
 		}
 	}, {
 		key: 'onFlip',
-		value: function onFlip(event) {
+		value: function onFlip() {
 			document.querySelector(".card-container").classList.toggle("flip");
 		}
 	}, {
@@ -136,11 +138,13 @@ var Review = function (_React$Component3) {
 		value: function makeRequest(word) {
 			console.log(word);
 			var flag = 0;
-			this.state.src == word ? flag = 1 : console.log("wrong");
+			this.state.src == word ? flag = 1 : document.querySelector(".card-container").classList.toggle("flip");
 			flag ? fetch('/updateCorrect?id=' + this.state.cardID).then(function (res) {
 				return res.text();
 			}).then(function (res) {
 				console.log(JSON.parse(res));
+				document.querySelector(".correct").classList.remove("hidden");
+				document.querySelector(".correct").classList.add("visible");
 			}) : console.log("incorrect");
 		}
 	}, {

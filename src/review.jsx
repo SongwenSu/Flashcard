@@ -4,6 +4,7 @@ class CardFront extends React.Component {
       <div className='card-side side-front'>
          <div className='card-side-container'>
               <h2 id='trans'>{this.props.text}</h2>
+							<img className='card-side correct hidden' src="js/correct.JPG"/>
         </div>
       </div>
     )
@@ -30,6 +31,7 @@ class Review extends React.Component {
 		this.onChange = this.onChange.bind(this);
 		this.makeRequest = this.makeRequest.bind(this);
 		this.keyListener = this.keyListener.bind(this);
+		this.onFlip = this.onFlip.bind(this);
     }   
     goMain(){
 		console.log("go back to main");
@@ -63,20 +65,23 @@ class Review extends React.Component {
 		
 	}
 
-	onFlip(event){
+	onFlip(){
 		document.querySelector(".card-container").classList.toggle("flip");
 	}
 
 	makeRequest(word) {
 		console.log(word);
 		let flag = 0;
-		this.state.src == word ? flag = 1:console.log ("wrong");
+		this.state.src == word ? flag = 1:document.querySelector(".card-container").classList.toggle("flip");
 		flag ? fetch(`/updateCorrect?id=${this.state.cardID}`)
 		.then(res=> res.text())
-		.then(res=>{ console.log(JSON.parse(res));}): console.log("incorrect");
+		.then(res=>{ console.log(JSON.parse(res));
+				document.querySelector(".correct").classList.remove("hidden");
+				document.querySelector(".correct").classList.add("visible");
+		
+		}): console.log("incorrect");
 
 	}
-
 
 	componentDidMount(){
 		fetch('/getCards')
@@ -121,7 +126,7 @@ class Review extends React.Component {
 				</div>
 				<div className="next">
 					<button onClick={this.nextCard}>Next</button>
-				</div>
+				</div> 
 				<div className="footnote">
 					<h1>{this.state.user}</h1>
 				</div>
