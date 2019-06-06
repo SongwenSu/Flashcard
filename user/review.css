@@ -10,7 +10,6 @@ div.top{
     flex: 1;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
     align-items: center;
 }
 
@@ -30,16 +29,15 @@ div.top > h1{
     flex: 5;
     font: Raleway Black;
     font-size: 5em;
-    font-weight: bold;
-    margin-left: 8%;
-    padding-right: 5%;
-    
+    font-weight: 900;
+    margin-left: 12%;
+    /* padding-right: 5%; */
 }
 div.cards {
     flex: 3;
     display: flex;
-    flex-direction: column-reverse;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-left: 10%;
     margin-right: 10%;
@@ -55,7 +53,7 @@ div.inputTextCard {
     border-color: #A9A9A9;
     align-content: center;
     justify-content: center;
-    margin-right: 5%;
+    /* margin-right: 5%; */
     width: 50vw;
     margin-bottom: 3%;
 }
@@ -70,8 +68,8 @@ div.displayTextCard {
     align-content: center;
     justify-content: center;
     width: 50vw;
-    margin-right: 5%;
-    margin-bottom: 3%;
+    /* margin-right: 5%; */
+    margin-bottom: -10vh;
 }
 div.textCard > p {
     display: flex;
@@ -86,8 +84,7 @@ div.next> button {
     background-color: #70C7A9;
     color: #FFFFFF;
     flex: 1;
-    font-size: 1.3em;
-
+    font-size: 200%;
     border: none;
     border-radius: 8px;
     padding: 10px;
@@ -102,7 +99,7 @@ div.footnote {
     
 }
 div.footnote > h1 {
-    font-size: 1.3em;
+    font-size: 200%;
     text-align: center;
     color: #FFFFFF;
 }
@@ -112,5 +109,124 @@ textarea:focus {
 }
 
 textarea {
+    text-align: center;
     border: none;
+}
+
+@media only screen and (max-width: 1025px){
+    body {
+        font-family: Helvetica, sans-serif;
+    }
+    main{
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    div.top{
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    div.top > button{
+        background-color:#606B9B;
+        color: #FFFFFF;
+        flex: 1;
+        font-size: 1.3em;
+        margin-left: 5%;
+        margin-right: 5%;
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+    } 
+    div.top > h1{
+        color:#606B9B;
+        flex: 5;
+        font: Raleway Black;
+        font-size: 5em;
+        font-weight: 900;
+        margin-left: 12%;
+        /* padding-right: 5%; */
+    }
+    div.cards {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    div.inputTextCard {
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        border-style: solid;
+        border-width: 0.2em;
+        border-color: #A9A9A9;
+        align-content: center;
+        justify-content: center;
+        /* margin-right: 5%; */
+        width: 75vw;
+        margin-bottom: 3%;
+    }
+    div.displayTextCard {
+        flex:4;
+        display: flex;
+        flex-direction: column;
+        /* background-color: #ffffff;
+        border-style: solid;
+        border-width: 0.2em;
+        border-color: #A9A9A9; */
+        align-content: center;
+        justify-content: center;
+        width: 75vw;
+        /* margin-right: 5%; */
+        margin-bottom: -10vh;
+    }
+    div.textCard > p {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    }
+    div.next {
+        flex: 1;
+        margin-left: 80%;
+    }
+    div.next> button {
+        background-color: #70C7A9;
+        color: #FFFFFF;
+        flex: 1;
+        font-size: 1.3em;
+
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+    } 
+    div.footnote {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        background-color:#606B9B;
+        
+    }
+    div.footnote > h1 {
+        font-size: 200%;
+        text-align: center;
+        color: #FFFFFF;
+    }
+    /* don't get weird blue border when I type */
+    textarea:focus {
+        outline: none;
+    }
+
+    textarea {
+        text-align: center;
+        border: none;
+    }
 }

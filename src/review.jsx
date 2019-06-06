@@ -4,7 +4,6 @@ class CardFront extends React.Component {
       <div className='card-side side-front'>
          <div className='card-side-container'>
               <h2 id='trans'>{this.props.text}</h2>
-							<img className='card-side correct hidden' src="js/correct.JPG"/>
         </div>
       </div>
     )
@@ -17,6 +16,7 @@ class CardBack extends React.Component {
       <div className='card-side side-back'>
          <div className='card-side-container'>
               <h2 id='congrats'>{this.props.text}</h2>
+              <img className='card-side correct hidden' src="js/correct.JPG"/>
         </div>
       </div>
     )
@@ -46,8 +46,19 @@ class Review extends React.Component {
 		.then(res=>{
 			let rows = JSON.parse(res);
 			let n = Object.keys(rows).length;
-			let display = rows[Math.floor(Math.random()*n)];
+			let scoreTable = []
+			for(index in n){
+				let numShown, numCorrect = rows[Math.floor(Math.random()*n)];
+				scoreTable[index] = numCorrect + numShown;
+			}
+			let real = scoreTable.indexOf(Math.min(scoreTable), 0);
+			console.log("real is" + real);
+			let display = rows[Math.floor(real)];
+			display = rows[Math.floor(Math.random()*n)];
+			console.log("entry is " + display);
 			this.setState({data: display.translateText, src: display.sourceText, cardID:display.id});
+			document.querySelector(".correct").classList.remove("visible");
+			document.querySelector(".correct").classList.add("hidden");
 		});
 		this.setState({input:""});
 	}
@@ -78,7 +89,7 @@ class Review extends React.Component {
 		.then(res=>{ console.log(JSON.parse(res));
 				document.querySelector(".correct").classList.remove("hidden");
 				document.querySelector(".correct").classList.add("visible");
-		
+				document.querySelector(".card-container").classList.toggle("flip");
 		}): console.log("incorrect");
 
 	}
@@ -110,19 +121,15 @@ class Review extends React.Component {
 				</div>
 
 				<div className="cards">
-					<div className="inputTextCard">
-				
-						<textarea id="myinput" onChange={this.onChange} onKeyPress={this.keyListener} value={this.state.input}></textarea> 
-					</div>
-					<div className="displayTextCard">
 						<div className='card-container'>
 							<div onClick={this.onFlip} className='card-body'>
 								<CardFront text={this.state.data} />
 								<CardBack text={this.state.src} />
 							</div>
 						</div>
+					<div className="inputTextCard">				
+						<textarea id="myinput" onChange={this.onChange} onKeyPress={this.keyListener} value={this.state.input}></textarea> 
 					</div>
-
 				</div>
 				<div className="next">
 					<button onClick={this.nextCard}>Next</button>

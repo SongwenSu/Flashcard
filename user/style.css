@@ -15,14 +15,11 @@ h2 {
 }
 
 h1 {
-  margin-bottom: 16px;
-  font-size: 24px;
-  font-weight: 700;
 }
 
 h2 {
   margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 200%;
   font-weight: 400;
 }
 
@@ -38,13 +35,18 @@ h2 {
 
 /*- Card container -*/
 .card-container {
-  position: relative;
-  z-index: 1;
-  /* margin: 32px auto; */
-  max-width: 720px;
-  height: 420px;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
+      flex: 1;
+      display: inline-flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      width: 50vw;
+      /* margin-right: 5%; */
+      position: relative;
+      z-index: 1;
+      /* margin: 32px auto; */
+      height: 30vh;
+      perspective: 1000px;
 }
 
 /*- Card body -*/
@@ -64,7 +66,7 @@ h2 {
 
 .card-container.flip > .card-body > .side-front {
   opacity: 0;
-  visibility: hidden;
+/*   visibility: hidden; */
   transition: opacity 1s ease-in;
   visibility: .75s linear;
 }
@@ -111,4 +113,21 @@ h2 {
 .btn-primary:focus, .btn-primary:hover {
   background-color: #56a7f9;
   box-shadow: 0 18px 35px rgba(50, 50, 93, 0.1), 0 8px 15px rgba(0, 0, 0, 0.07);
+}
+
+@media only screen and (max-width: 1025px){
+  .card-container {
+      flex: 1;
+      display: inline-flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: center;
+      width: 75vw;
+      /* margin-right: 5%; */
+      position: relative;
+      z-index: 1;
+        /* margin: 32px auto; */
+      height: 30vh;
+      perspective: 1000px;
+  }
 }

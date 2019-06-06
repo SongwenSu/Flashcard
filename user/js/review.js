@@ -28,8 +28,7 @@ var CardFront = function (_React$Component) {
 						'h2',
 						{ id: 'trans' },
 						this.props.text
-					),
-					React.createElement('img', { className: 'card-side correct hidden', src: 'js/correct.JPG' })
+					)
 				)
 			);
 		}
@@ -60,7 +59,8 @@ var CardBack = function (_React$Component2) {
 						'h2',
 						{ id: 'congrats' },
 						this.props.text
-					)
+					),
+					React.createElement('img', { className: 'card-side correct hidden', src: 'js/correct.JPG' })
 				)
 			);
 		}
@@ -108,8 +108,20 @@ var Review = function (_React$Component3) {
 			}).then(function (res) {
 				var rows = JSON.parse(res);
 				var n = Object.keys(rows).length;
-				var display = rows[Math.floor(Math.random() * n)];
+				var scoreTable = [];
+				for (index in n) {
+					var numShown = void 0,
+					    numCorrect = rows[Math.floor(Math.random() * n)];
+					scoreTable[index] = numCorrect + numShown;
+				}
+				var real = scoreTable.indexOf(Math.min(scoreTable), 0);
+				console.log("real is" + real);
+				var display = rows[Math.floor(real)];
+				display = rows[Math.floor(Math.random() * n)];
+				console.log("entry is " + display);
 				_this4.setState({ data: display.translateText, src: display.sourceText, cardID: display.id });
+				document.querySelector(".correct").classList.remove("visible");
+				document.querySelector(".correct").classList.add("hidden");
 			});
 			this.setState({ input: "" });
 		}
@@ -145,6 +157,7 @@ var Review = function (_React$Component3) {
 				console.log(JSON.parse(res));
 				document.querySelector(".correct").classList.remove("hidden");
 				document.querySelector(".correct").classList.add("visible");
+				document.querySelector(".card-container").classList.toggle("flip");
 			}) : console.log("incorrect");
 		}
 	}, {
@@ -192,22 +205,18 @@ var Review = function (_React$Component3) {
 					{ className: 'cards' },
 					React.createElement(
 						'div',
-						{ className: 'inputTextCard' },
-						React.createElement('textarea', { id: 'myinput', onChange: this.onChange, onKeyPress: this.keyListener, value: this.state.input })
+						{ className: 'card-container' },
+						React.createElement(
+							'div',
+							{ onClick: this.onFlip, className: 'card-body' },
+							React.createElement(CardFront, { text: this.state.data }),
+							React.createElement(CardBack, { text: this.state.src })
+						)
 					),
 					React.createElement(
 						'div',
-						{ className: 'displayTextCard' },
-						React.createElement(
-							'div',
-							{ className: 'card-container' },
-							React.createElement(
-								'div',
-								{ onClick: this.onFlip, className: 'card-body' },
-								React.createElement(CardFront, { text: this.state.data }),
-								React.createElement(CardBack, { text: this.state.src })
-							)
-						)
+						{ className: 'inputTextCard' },
+						React.createElement('textarea', { id: 'myinput', onChange: this.onChange, onKeyPress: this.keyListener, value: this.state.input })
 					)
 				),
 				React.createElement(
