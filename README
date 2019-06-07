@@ -1,0 +1,9 @@
+### How to run the app
+To run the application, user should run the server.js in the server and go to http://server162.site:51296/lango.html to load the page
+
+### Database
+We have two databases in total, one for flashcard, one for user.
+
+### About fliping the card
+In review page, the card will flip if the user press enter in 
+the input card or click the output card.
